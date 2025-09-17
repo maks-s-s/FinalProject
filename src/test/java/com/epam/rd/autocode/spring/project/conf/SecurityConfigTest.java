@@ -10,7 +10,7 @@ public class SecurityConfigTest {
     @Test
     @DisplayName("Annotation [Configuration] exist for SecurityConfig class")
     public void testsConfigAnnotation() throws ClassNotFoundException {
-        Class<?> aClass = Class.forName("com.epam.rd.autocode.spring.project.conf.SecurityConfig");
+        Class<?> aClass = Class.forName("com.epam.rd.autocode.spring.project.security.SecurityConfig");
 
         assertTrue(aClass.isAnnotationPresent(Configuration.class),
                 String.format("Class [%s]. [@Configuration] is missed.", aClass.getSimpleName()));

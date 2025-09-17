@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f7fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .login-container {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+      width: 350px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.3rem;
+      color: #444;
+      font-size: 0.9rem;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 0.6rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.8rem;
+      background: #4CAF50;
+      border: none;
+      color: white;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-bottom: 0.8rem;
+    }
+
+    button:hover {
+      background: #45a049;
+    }
+
+    .secondary-btn {
+      background: #2196F3;
+    }
+
+    .secondary-btn:hover {
+      background: #1976D2;
+    }
+
+    .error {
+      color: #d9534f;
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+
+    .logout {
+      color: #5cb85c;
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+<div class="login-container">
+  <h2>Вход</h2>
+
+  <form th:action="@{/login}" method="post">
+  <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+  <label for="username">Имя пользователя</label>
+  <input type="text" name="username" id="username"/>
+
+  <label for="password">Пароль</label>
+  <input type="password" name="password" id="password"/>
+
+  <button type="submit">Войти</button>
+</form>
+
+  <form th:action="@{/register}" method="get">
+    <button type="submit" class="secondary-btn">Регистрация</button>
+  </form>
+
+  <div th:if="${loginError}" class="error">
+    Неверный логин или пароль
+  </div>
+
+  <div th:if="${logoutMessage}" class="logout">
+    Вы успешно вышли
+  </div>
+</div>
+</body>
+</html>

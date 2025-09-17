@@ -1,41 +1,34 @@
 package com.epam.rd.autocode.spring.project.model;
 
+import com.epam.rd.autocode.spring.project.model.enums.OrderStatus;
+import com.epam.rd.autocode.spring.project.model.generaEntities.BaseEntity;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.AllArgsConstructor;
-
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity
-@Table(name = "ORDERS")
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class Order {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "client_id", nullable = false)
-    private Client client;
+@NoArgsConstructor
+@Entity
+@Table(name = "orders")
+public class Order extends BaseEntity {
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "employee_id", nullable = false)
-    private Employee employee;
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @Column(nullable = false)
-    private LocalDateTime orderDate;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 50)
+    private OrderStatus status;
 
-    @Column(nullable = false)
-    private BigDecimal price;
+    @Column(name = "total_amount", nullable = false, precision = 10, scale = 2)
+    private BigDecimal totalAmount;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<BookItem> bookItems;
+    private List<OrderItem> items;
 }

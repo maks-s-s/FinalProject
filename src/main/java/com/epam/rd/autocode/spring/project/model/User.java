@@ -1,21 +1,23 @@
 package com.epam.rd.autocode.spring.project.model;
 
+import com.epam.rd.autocode.spring.project.model.generaEntities.AuditableEntity;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import com.epam.rd.autocode.spring.project.model.enums.UserRole;
 
-@MappedSuperclass
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public abstract class User {
+@NoArgsConstructor
+@Entity
+@Table(name = "users")
+public class User extends AuditableEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(nullable = false, unique = true, length = 100)
+    private String username;
 
     @Column(nullable = false, unique = true)
     private String email;
@@ -23,6 +25,10 @@ public abstract class User {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
-    private String name;
+    @Column(name = "phone_number", length = 20)
+    private String phoneNumber;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 50)
+    private UserRole role = UserRole.CUSTOMER;
 }

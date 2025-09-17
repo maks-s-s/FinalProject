@@ -2,49 +2,48 @@ package com.epam.rd.autocode.spring.project.model;
 
 import com.epam.rd.autocode.spring.project.model.enums.AgeGroup;
 import com.epam.rd.autocode.spring.project.model.enums.Language;
+import com.epam.rd.autocode.spring.project.model.generaEntities.AuditableEntity;
 import jakarta.persistence.*;
-import lombok.*;
-
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
-@Entity
-@Table(name = "BOOKS")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Book {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Entity
+@Table(name = "books")
+public class Book extends AuditableEntity {
 
     @Column(nullable = false)
-    private String name;
+    private String title;
 
+    @Column(nullable = false)
+    private String author;
+
+    @Column(columnDefinition = "TEXT")
+    private String description;
+
+    @Column(length = 100)
     private String genre;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "age_group")
+    @Column(name = "age_group", nullable = false, length = 50)
     private AgeGroup ageGroup;
 
-    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 50)
+    private Language language;
+
+    @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal price;
 
-    @Column(name = "publication_year")
-    private LocalDate publicationDate;
+    @Column(name = "stock_quantity", nullable = false)
+    private Integer stockQuantity = 0;
 
-    private String author;
-
-    @Column(name = "number_of_pages")
-    private Integer pages;
-
-    private String characteristics;
-
-    @Column(length = 1000)
-    private String description;
-
-    @Enumerated(EnumType.STRING)
-    private Language language;
+    @Column(name = "discount_percentage", precision = 5, scale = 2)
+    private BigDecimal discountPercentage = BigDecimal.ZERO;
 }

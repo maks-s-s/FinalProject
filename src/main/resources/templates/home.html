@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{success.title}">Успешный вход</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef5ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .success-container {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+            width: 400px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 1.2rem;
+        }
+
+        .username {
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        a.logout-btn {
+            display: inline-block;
+            margin-top: 1.2rem;
+            padding: 0.7rem 1.2rem;
+            background: #dc3545;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        a.logout-btn:hover {
+            background: #c82333;
+        }
+
+        .lang-switch {
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .lang-switch a {
+            color: #007bff;
+            text-decoration: none;
+            margin: 0 0.3rem;
+        }
+
+        .lang-switch a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="success-container">
+    <h2>
+        <span th:text="#{success.welcome}">Добро пожаловать</span>,
+        <span class="username" th:text="${username}">пользователь</span>!
+    </h2>
+
+    <form th:action="@{/logout}" method="post">
+        <button type="submit" class="logout-btn" th:text="#{success.logout}">Выйти</button>
+    </form>
+
+    <div class="lang-switch">
+        <a href="?lang=en">English</a> |
+        <a href="?lang=uk">Українська</a>
+    </div>
+</div>
+</body>
+</html>
