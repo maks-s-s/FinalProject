@@ -8,6 +8,7 @@ import com.epam.rd.autocode.spring.project.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -36,5 +37,14 @@ public class UserServiceImpl implements UserService {
         user.setRole(role);
 
         userRepository.save(user);
+    }
+
+    @Override
+    @Transactional
+    public void changePassword(String email, String newPassword) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(NotFoundException::new);
+
+        user.setPassword(passwordEncoder.encode(newPassword));
     }
 }

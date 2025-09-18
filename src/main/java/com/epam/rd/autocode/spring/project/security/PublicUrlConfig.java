@@ -5,8 +5,6 @@ import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component
 public class PublicUrlConfig {
 
@@ -16,7 +14,9 @@ public class PublicUrlConfig {
         this.requestMatcher = new OrRequestMatcher(
                 new AntPathRequestMatcher("/login"),
                 new AntPathRequestMatcher("/register"),
-                new AntPathRequestMatcher("/error")
+                new AntPathRequestMatcher("/error"),
+                new AntPathRequestMatcher("/forgot-password"),
+                new AntPathRequestMatcher("/reset-password")
         );
     }
 

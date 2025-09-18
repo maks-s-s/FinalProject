@@ -38,16 +38,22 @@ public class SecurityConfig {
 
     @Bean
     public TokenCookieAuthenticationConfigurer tokenCookieAuthenticationConfigurer(
-            @Value("${jwt.cookie-token-key}") String cookieTokenKey,
+            TokenCookieJweStringDeserializer deserializer,
             DeactivatedTokenRepository deactivatedTokenRepository,
-            PublicUrlConfig publicUrlConfig) throws ParseException, KeyLengthException {
+            PublicUrlConfig publicUrlConfig) {
+
         return new TokenCookieAuthenticationConfigurer()
-                .tokenCookieStringDeserializer(new TokenCookieJweStringDeserializer(
-                        new DirectDecrypter(
-                                OctetSequenceKey.parse(cookieTokenKey)
-                        )))
+                .tokenCookieStringDeserializer(deserializer)
                 .deactivatedTokenRepository(deactivatedTokenRepository)
                 .requestMatcher(new NegatedRequestMatcher(publicUrlConfig.getRequestMatcher()));
+    }
+
+    @Bean
+    public TokenCookieJweStringDeserializer tokenCookieJweStringDeserializer(
+            @Value("${jwt.cookie-token-key}") String cookieTokenKey) throws Exception {
+        return new TokenCookieJweStringDeserializer(
+                new DirectDecrypter(OctetSequenceKey.parse(cookieTokenKey))
+        );
     }
 
     @Bean
