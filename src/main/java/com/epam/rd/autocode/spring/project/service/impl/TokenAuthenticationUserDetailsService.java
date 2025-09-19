@@ -1,5 +1,6 @@
 package com.epam.rd.autocode.spring.project.service.impl;
 
+import com.epam.rd.autocode.spring.project.exception.InvalidJwtToken;
 import com.epam.rd.autocode.spring.project.repo.DeactivatedTokenRepository;
 import com.epam.rd.autocode.spring.project.security.Token;
 import com.epam.rd.autocode.spring.project.security.TokenUser;
@@ -29,6 +30,11 @@ public class TokenAuthenticationUserDetailsService
             boolean notDeactivated = !deactivatedTokenRepository.existsById(tokenId);
             boolean notExpired = token.expiresAt().isAfter(Instant.now());
 
+            if (token.authorities().contains("PASSWORD_RECOVERY")) {throw new InvalidJwtToken("Cannot authenticate with password recovery token");}
+
+            boolean hasRole = token.authorities().stream().anyMatch(a -> a.startsWith("ROLE_"));
+            if (!hasRole) {throw new InvalidJwtToken("User has no valid role");}
+
             return new TokenUser(
                     token.subject(),
                     "nopassword",
@@ -43,6 +49,6 @@ public class TokenAuthenticationUserDetailsService
             );
         }
 
-        throw new UsernameNotFoundException("Principal must be of type Token");
+        throw new InvalidJwtToken("Principal must be of type Token");
     }
 }

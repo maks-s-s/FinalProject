@@ -3,9 +3,11 @@ package com.epam.rd.autocode.spring.project.service;
 import com.epam.rd.autocode.spring.project.model.User;
 import com.epam.rd.autocode.spring.project.model.enums.UserRole;
 
+import java.util.Optional;
+
 public interface UserService {
-    User findByEmail(String email);
+    Optional<User> findByEmail(String email);
     Boolean existsByEmail(String email);
-    void registerUser(String username, String email, String rawPassword, String phoneNumber, UserRole role);
+    User registerUser(String username, String email, String rawPassword, UserRole role);
     void changePassword(String email, String newPassword);
 }

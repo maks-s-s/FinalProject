@@ -17,7 +17,7 @@ public class TokenCookieJweStringDeserializer implements Function<String, Token>
 
     private final JWEDecrypter jweDecrypter;
 
-    public TokenCookieJweStringDeserializer(JWEDecrypter jweDecrypter) {
+        public TokenCookieJweStringDeserializer(JWEDecrypter jweDecrypter) {
         this.jweDecrypter = jweDecrypter;
     }
 

@@ -5,61 +5,63 @@
     <title th:text="#{success.title}">Успешный вход</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background: #eef5ff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #eef5ff, #f8fbff);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
         }
-
         .success-container {
             background: #fff;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 6px 16px rgba(0,0,0,0.1);
-            width: 400px;
+            padding: 2.5rem 2rem;
+            border-radius: 14px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+            width: 420px;
+            max-width: 90%;
             text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
-
+        .success-container:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 30px rgba(0,0,0,0.15);
+        }
         h2 {
             color: #333;
-            margin-bottom: 1.2rem;
+            font-size: 1.6rem;
+            margin-bottom: 1.5rem;
         }
-
         .username {
             color: #007bff;
             font-weight: bold;
         }
-
-        a.logout-btn {
-            display: inline-block;
-            margin-top: 1.2rem;
-            padding: 0.7rem 1.2rem;
+        form button.logout-btn {
+            width: 100%;
+            padding: 0.8rem;
             background: #dc3545;
             color: white;
-            text-decoration: none;
-            border-radius: 8px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
             transition: 0.3s;
         }
-
-        a.logout-btn:hover {
+        form button.logout-btn:hover {
             background: #c82333;
         }
-
         .lang-switch {
-            margin-top: 1.5rem;
+            margin-top: 1.8rem;
             font-size: 0.9rem;
         }
-
         .lang-switch a {
             color: #007bff;
             text-decoration: none;
-            margin: 0 0.3rem;
+            margin: 0 0.4rem;
+            transition: color 0.3s;
         }
-
         .lang-switch a:hover {
+            color: #0056b3;
             text-decoration: underline;
         }
     </style>
@@ -70,11 +72,9 @@
         <span th:text="#{success.welcome}">Добро пожаловать</span>,
         <span class="username" th:text="${username}">пользователь</span>!
     </h2>
-
     <form th:action="@{/logout}" method="post">
         <button type="submit" class="logout-btn" th:text="#{success.logout}">Выйти</button>
     </form>
-
     <div class="lang-switch">
         <a href="?lang=en">English</a> |
         <a href="?lang=uk">Українська</a>

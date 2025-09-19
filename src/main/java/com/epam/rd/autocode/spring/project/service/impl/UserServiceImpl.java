@@ -10,6 +10,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -18,8 +20,8 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public User findByEmail(String email) {
-        return userRepository.findByEmail(email).orElseThrow(NotFoundException::new);
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     @Override
@@ -28,15 +30,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void registerUser(String username, String email, String rawPassword, String phoneNumber, UserRole role) {
+    @Transactional
+    public User registerUser(String username, String email, String rawPassword, UserRole role) {
         User user = new User();
         user.setUsername(username);
         user.setEmail(email);
         user.setPassword(passwordEncoder.encode(rawPassword));
-        user.setPhoneNumber(phoneNumber);
         user.setRole(role);
 
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     @Override

@@ -16,7 +16,9 @@ public class PublicUrlConfig {
                 new AntPathRequestMatcher("/register"),
                 new AntPathRequestMatcher("/error"),
                 new AntPathRequestMatcher("/forgot-password"),
-                new AntPathRequestMatcher("/reset-password")
+                new AntPathRequestMatcher("/reset-password"),
+                new AntPathRequestMatcher("/oauth2/**"),
+                new AntPathRequestMatcher("/login/oauth2/**")
         );
     }
 

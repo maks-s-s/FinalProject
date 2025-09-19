@@ -1,6 +1,6 @@
 package com.epam.rd.autocode.spring.project.service.impl;
 
-import com.epam.rd.autocode.spring.project.security.TokenUser;
+import com.epam.rd.autocode.spring.project.exception.NotFoundException;
 import com.epam.rd.autocode.spring.project.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,10 +20,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        var user = userService.findByEmail(username);
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found: " + username);
-        }
+        var user = userService.findByEmail(username).orElseThrow(NotFoundException::new);
         return new User(
                 user.getEmail(),
                 user.getPassword(),
